@@ -31,11 +31,11 @@ class OtherCommonJson {
     }
 
     if ($json_data) {
-      $file = file_save_data($json_data, 'public://json/' . $file_name, FILE_EXISTS_REPLACE);
+      $file = file_save_data($json_data, 'private://json/' . $file_name, FILE_EXISTS_REPLACE);
     }
     else {
       // put empty content
-      $file = file_save_data('', 'public://json/' . $file_name, FILE_EXISTS_REPLACE);
+      $file = file_save_data('', 'private://json/' . $file_name, FILE_EXISTS_REPLACE);
     }
   }
 
@@ -52,16 +52,16 @@ class OtherCommonJson {
     if (is_array($raw_data)) {
       $json_data = OtherCommonJson::encodeJson($raw_data);
       if ($json_data) {
-        $file = file_save_data($json_data, 'public://json/' . $file_name, FILE_EXISTS_REPLACE);
+        $file = file_save_data($json_data, 'private://json/' . $file_name, FILE_EXISTS_REPLACE);
       }
       else {
         // put empty content
-        $file = file_save_data('', 'public://json/' . $file_name, FILE_EXISTS_REPLACE);
+        $file = file_save_data('', 'private://json/' . $file_name, FILE_EXISTS_REPLACE);
       }
     }
     else {
       // put empty content
-      $file = file_save_data('', 'public://json/' . $file_name, FILE_EXISTS_REPLACE);
+      $file = file_save_data('', 'private://json/' . $file_name, FILE_EXISTS_REPLACE);
     }
   }
 }
@@ -128,84 +128,6 @@ class SourceJson {
         $output[$voc_row->machine_name] = array(
           'vid'  => $voc_row->vid,
           'term' => $all_term,
-        );
-      }
-    }
-
-    return $output;
-  }
-
-  /**
-   * @return Term Program Array data
-   * only for meeting request with using JS datatable library to read
-   */
-  public function termProgramDatatable() {
-    $output = NULL;
-
-    $all_term_array = taxonomy_get_tree(2);
-
-    if (is_array($all_term_array)) {
-      foreach ($all_term_array as $term_key => $term_row) {
-        $TermProgramInfo = new TermProgramInfo($term_row->tid);
-
-        $output[] = array(
-          'programTid'  => $term_row->tid,
-          'programName' => $term_row->name,
-          'programType' => $TermProgramInfo->programTypeName(),
-          'programCategory' => 'IPF',
-          'selectText' => t('SELECT'),
-          'programObjective' => $term_row->description,
-        );
-      }
-    }
-
-    return $output;
-  }
-
-  /**
-   * @return Term Question Array data
-   */
-  public function allQuestionLibrary() {
-    $output = NULL;
-
-    $all_term_array = taxonomy_get_tree(4);
-
-    if (is_array($all_term_array)) {
-      foreach ($all_term_array as $term_key => $term_row) {
-        $TermQuestionLibInfo = new TermQuestionLibInfo($term_row->tid);
-        $output[] = array(
-          'chartTypeTid'  => $TermQuestionLibInfo->chartTypeTid(),
-          'chartTypeName'  => $TermQuestionLibInfo->chartTypeName(),
-          'labelTid'  => $TermQuestionLibInfo->labelTid(),
-          'fieldTid'  => $TermQuestionLibInfo->fieldTid(),
-          'fieldName'  => $TermQuestionLibInfo->fieldName(),
-          'questionTid'  => $term_row->tid,
-          'questionName' => $term_row->name,
-          'lengthValue' => $TermQuestionLibInfo->lengthValue(),
-        );
-      }
-    }
-
-    return $output;
-  }
-
-  /**
-   * @return Term Question Array data
-   */
-  public function allQuestionSet() {
-    $output = NULL;
-
-    $all_term_array = taxonomy_get_tree(6);
-
-    if (is_array($all_term_array)) {
-      foreach ($all_term_array as $term_key => $term_row) {
-        $TermQuestionSetInfo = new TermQuestionSetInfo($term_row->tid);
-
-        $output[] = array(
-          'questionSetTid'  => $term_row->tid,
-          'questionSetName' => $term_row->name,
-          'questionSetDescrption' => $TermQuestionSetInfo->termDescription(),
-          'questionCountNumber' => $TermQuestionSetInfo->questionCountNumber(),
         );
       }
     }
@@ -356,163 +278,13 @@ class SourceJson {
     return $output;
   }
 
-  /**
-   * @return User Array data
-   * category by user roles
-   */
-  public function userReportData() {
-    $output = NULL;
-
-    foreach (entity_load('user') as $key => $row) {
-      if ($key > 0) {
-        if ($row->status == 1) {
-          $UserInfo = new UserInfo($row->uid);
-
-          $output['users']['speaker']['rid'] = 6;
-          $output['users']['rep']['rid'] = 7;
-
-          if (user_has_role(6, $row)) {
-            $output['users']['speaker']['user'][$row->uid] = array(
-              'avgResponseTime' => $UserInfo->randNum(1, 20),
-              'email' => $UserInfo->userEmail(),
-              'eventScheduled' => $UserInfo->randNum(1, 20),
-              'fullname' => $UserInfo->fullname(),
-              'lastVisit' => $UserInfo->lastLoginTimeInterval(),
-              'someMetric' => array(
-                'metric0' => array(
-                  'color' => '#33bcde',
-                  'value' => 78,
-                ),
-                'metric1' => array(
-                  'color' => '#b6da52',
-                  'value' => 78,
-                ),
-                'metric2' => array(
-                  'color' => '#E72682',
-                  'value' => 78,
-                ),
-              ),
-              'supportRequests' => $UserInfo->randNum(1, 30),
-              'uid' => $row->uid,
-              'meetingActivity' => array(
-                'completed' => $UserInfo->randNum(1, 20),
-                'confirmed' => $UserInfo->randNum(1, 20),
-                'cancelled' => $UserInfo->randNum(1, 20),
-                'pending' => $UserInfo->randNum(1, 20),
-                'declined' => $UserInfo->randNum(1, 20),
-              ),
-              'regionalMeeting' => array(
-                'jan' => $UserInfo->randNum(1, 10),
-                'feb' => $UserInfo->randNum(1, 10),
-                'mar' => $UserInfo->randNum(1, 10),
-                'apr' => $UserInfo->randNum(1, 10),
-                'may' => $UserInfo->randNum(1, 10),
-                'jun' => $UserInfo->randNum(1, 10),
-                'jul' => $UserInfo->randNum(1, 10),
-                'aug' => $UserInfo->randNum(1, 10),
-                'sep' => $UserInfo->randNum(1, 10),
-                'oct' => $UserInfo->randNum(1, 10),
-                'nov' => $UserInfo->randNum(1, 10),
-                'dec' => $UserInfo->randNum(1, 10),
-              ),
-            );
-          }
-
-          if (user_has_role(7, $row)) {
-            $output['users']['rep']['user'][$row->uid] = array(
-              'avgResponseTime' => $UserInfo->randNum(1, 20),
-              'email' => $UserInfo->userEmail(),
-              'eventScheduled' => $UserInfo->randNum(1, 20),
-              'fullname' => $UserInfo->fullname(),
-              'lastVisit' => $UserInfo->lastLoginTimeInterval() ? $UserInfo->lastLoginTimeInterval() : 'N/A',
-              'someMetric' => array(
-                'metric0' => array(
-                  'color' => '#33bcde',
-                  'value' => 78,
-                ),
-                'metric1' => array(
-                  'color' => '#b6da52',
-                  'value' => 78,
-                ),
-                'metric2' => array(
-                  'color' => '#E72682',
-                  'value' => 78,
-                ),
-              ),
-              'supportRequests' => $UserInfo->randNum(1, 30),
-              'uid' => $row->uid,
-              'meetingActivity' => array(
-                'completed' => $UserInfo->randNum(1, 20),
-                'confirmed' => $UserInfo->randNum(1, 20),
-                'cancelled' => $UserInfo->randNum(1, 20),
-                'pending' => $UserInfo->randNum(1, 20),
-                'declined' => $UserInfo->randNum(1, 20),
-              ),
-              'regionalMeeting' => array(
-                'jan' => $UserInfo->randNum(1, 10),
-                'feb' => $UserInfo->randNum(1, 10),
-                'mar' => $UserInfo->randNum(1, 10),
-                'apr' => $UserInfo->randNum(1, 10),
-                'may' => $UserInfo->randNum(1, 10),
-                'jun' => $UserInfo->randNum(1, 10),
-                'jul' => $UserInfo->randNum(1, 10),
-                'aug' => $UserInfo->randNum(1, 10),
-                'sep' => $UserInfo->randNum(1, 10),
-                'oct' => $UserInfo->randNum(1, 10),
-                'nov' => $UserInfo->randNum(1, 10),
-                'dec' => $UserInfo->randNum(1, 10),
-              ),
-            );
-          }
-
-        }
-      }
-    }
-
-    return $output;
-  }
 
   /** - - - - - Node - - - - - - - - - - - - - - - - - - - - - - - - -   */
-  /**
-   * generate Node faq Data
-   */
-  public function nodeinfo_faq_data() {
-    /**
-     * data
-     */
-    $NodeQuery = new NodeQuery();
-    $all_faq_nid = $NodeQuery->allSupportNid();
-    $nodes = node_load_multiple($all_faq_nid);
-
-    /**
-     * data row array
-     */
-    $data_row = array();
-
-    $data_row['nodes'] = array();
-    if (is_array($nodes)) {
-      foreach($nodes as $node) {
-        $supportInfo = new supportInfo($node);
-
-        // table row
-        $data_row['nodes']['faq'][$node->nid] = array(
-          'author' => user_load($node->uid)->name,
-          'cretedTimeStamp' => $node->created,
-          'faqAnswer' => $supportInfo->faqAnswer(),
-          'nid' => $node->nid,
-          'title' => $supportInfo->nodeTitle(),
-          'type' => $node->type,
-        );
-      }
-    }
-
-    return $data_row;
-  }
 
   /**
    * generate Meeting Data
    */
-  public function allMeetingData() {
+  public function allGinsengData() {
     /**
      * data
      */

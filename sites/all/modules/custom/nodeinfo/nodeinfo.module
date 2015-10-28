@@ -19,26 +19,14 @@ function nodeinfo_init() {
  */
 function nodeinfo_form_alter(&$form, &$form_state, $form_id) {
   /**
-   * meeting node form
+   * ginseng node form
    */
-  if ($form_id == 'meeting_node_form' || $form_id == 'evaluation_node_form') {
+  if ($form_id == 'ginseng_node_form') {
     /**
      * hide title field, and revise node title is optional instead of required mandatory
      */
     $form['title']['#type'] = 'hidden';
     $form['title']['#required'] = FALSE;
-
-    $form['field_meeting_program']['und']['#disabled'] = TRUE;
-
-    if (is_numeric(arg(3)) && arg(2) == 'create' && arg(1) == 'meeting') {
-      $term = taxonomy_term_load(arg(3));
-
-      $form['field_meeting_program']['und']['#default_value'] = $term->tid;
-    }
-  }
-
-  if ($form_id == 'evaluation_node_form') {
-
   }
 
 }
@@ -59,15 +47,9 @@ function nodeinfo_node_presave($node) {
  * add automatic node title.
  */
 function _nodeinfo_nodetitle_set_title(&$node) {
-  /**
-   * meeting
-   */
-
-  if ($node->type == 'meeting') {
+  if ($node->type == 'ginseng') {
     $meetingInfo = new meetingInfo($node->nid);
-    $node->title = t('Meeting') . '-' . $meetingInfo->programName() . '-'. $meetingInfo->dateValue();
+    $node->title = t('Ginseng Product');
   }
-  if ($node->type == 'evalution') {
-    $node->title = t('Evalution');
-  }
+
 }

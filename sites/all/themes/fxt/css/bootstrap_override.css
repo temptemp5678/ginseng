@@ -1,0 +1,15 @@
+/**
+ * other CSS
+ */
+h1,.h1{font-size:24px}
+h2,.h2{font-size:22px}
+h3,.h3{font-size:20px}
+
+body .navbar {
+ /* margin-bottom: 0px; */
+}
+
+body {
+  font-family: "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+

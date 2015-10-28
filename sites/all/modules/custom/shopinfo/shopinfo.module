@@ -7,28 +7,21 @@
 /*
  * Implements of hook_init()
  */
-function manageinfo_init() {
+function shopinfo_init() {
 }
 
 /**
  * Implements hook_menu()
  */
-function manageinfo_menu() {
+function shopinfo_menu() {
   $items = array();
 
-  $items['manage/evaluation/create'] = array(
-    'title' => 'Create Evaluation',
-    'page callback' => '_manageinfo_evaluation_create',
+  $items['siteview/shop/list'] = array(
+    'title' => 'Shop List',
+    'page callback' => '_shopinfo_shop_list',
     'access arguments' => array('access content'),
     'type' => MENU_CALLBACK,
-    'file' => 'inc/manageinfo_node_create.page.inc',
-  );
-  $items['manage/evaluation/create-form-page'] = array(
-    'title' => 'Create Evaluation',
-    'page callback' => '_manageinfo_evaluation_create_form_page',
-    'access arguments' => array('access content'),
-    'type' => MENU_CALLBACK,
-    'file' => 'inc/manageinfo_node_create_form.page.inc',
+    'file' => 'inc/shopinfo_shop_list.page.inc',
   );
 
   return $items;
