@@ -1,0 +1,28 @@
+/**
+ * hide some field to normail user
+ */
+.page-user-edit .region-content #user-profile-form{
+  margin: 48px;
+}
+
+.page-user-edit .region-content #user-profile-form .form-item-current-pass,
+.page-user-edit .region-content #user-profile-form .form-item-mail,
+.page-user-edit .region-content #user-profile-form .form-item-field-user-firstname-und-0-value,
+.page-user-edit .region-content #user-profile-form .form-item-field-user-lastname-und-0-value,
+.page-user-edit .region-content #user-profile-form .form-item-field-user-city-und-0-value,
+.page-user-edit .region-content #user-profile-form .form-item-field-user-specialty-und-0-value,
+.page-user-edit .region-content #user-profile-form .form-item-field-user-mobile-und-0-value,
+.page-user-edit .region-content #user-profile-form .form-item-field-user-affiliation-und-0-value,
+.page-user-edit .region-content #user-profile-form .form-item-field-user-province-und,
+.page-user-edit .region-content #user-profile-form .form-item-field-user-specialtyrep-und,
+.page-user-edit .region-content #user-profile-form .form-item-field-user-speakergroup-und,
+.page-user-edit .region-content #user-profile-form > div > .panel {
+  display: none;
+}
+.page-user-edit ul.tabs--primary.nav{
+  display: none;
+}
+
+.page-user-edit .region-content #user-profile-form .form-type-password-confirm {
+  float: left;
+}

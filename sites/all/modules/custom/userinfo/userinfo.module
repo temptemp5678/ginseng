@@ -1,0 +1,84 @@
+<?php
+/**
+ * @file
+ *
+ */
+
+/*
+ * Implements hook_init()
+ */
+function userinfo_init() {
+  // add css for "user/%/edit" page
+  if ((arg(0) == 'user' && is_numeric(arg(1)) && arg(2) == 'edit') && (path_to_theme() != 'themes/seven')) {
+    drupal_add_css(drupal_get_path('module', 'userinfo') . '/css/user-edit-page.css');
+  }
+
+}
+
+/**
+ * Implements hook_menu()
+ */
+function userinfo_menu() {
+  $items = array();
+
+  $items['manage/user-profile/update/json'] = array(
+    'title' => 'Update User by JSON',
+    'page callback' => '_userinfo_user_profile_update_json',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'inc/userinfo_user_profile_update_json.page.inc',
+  );
+
+  return $items;
+}
+
+/**
+ * Implements hook_user_login().
+ */
+function userinfo_user_login(&$edit, $account) {
+  // check if user can access this link
+  if(drupal_valid_path('dashpage/home/index')) {
+    $edit['redirect'] = 'dashpage/home/index';
+  }
+}
+
+/**
+ * Implements hook_form_alter()
+ */
+function userinfo_form_user_pass_reset_alter(&$form, &$form_state, $form_id) {
+  if ($form_id == 'user_pass_reset') {
+    if (isset($form['actions']['submit']['#value']) && ($form['actions']['submit']['#value'] == 'Log in')) {
+      $form['actions']['submit']['#value'] = 'Reset password';
+      $form['message']['#prefix'] = '<tt class="font-size-32 color-344a5f label-title text-align-center">' . t('Reset Password') . '</tt>';
+    }
+  }
+}
+
+/**
+ * Implements hook_form_alter()
+ */
+function userinfo_form_user_pass_alter(&$form, &$form_state, $form_id) {
+  if ($form_id == 'user_pass') {
+    if (isset($form['name']['#title']) && ($form['name']['#title'] == 'Username or e-mail address')) {
+      $form['name']['#title'] = 'Enter your username or e-mail address';
+      $form['name']['#prefix'] = '<tt class="label-title font-size-32 color-344a5f">' . t('Password recovery') . '</tt>';
+    }
+    if (isset($form['actions']['submit']['#value']) && ($form['actions']['submit']['#value'] == 'E-mail new password')) {
+      $form['actions']['submit']['#value'] = 'Send new password';
+    }
+  }
+}
+
+/**
+ * Implements hook_form_alter()
+ */
+function userinfo_form_user_profile_form_alter(&$form, &$form_state, $form_id) {
+  if ($form_id == 'user_profile_form') {
+    $form['#submit'][] = '_userinfo_user_profile_form_submit';
+  }
+}
+function _userinfo_user_profile_form_submit($form, &$form_state) {
+  if (drupal_valid_path('dashpage/home/index')) {
+    $form_state['redirect'] = 'dashpage/home/index';
+  }
+}

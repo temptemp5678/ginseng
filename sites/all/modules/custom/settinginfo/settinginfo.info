@@ -1,0 +1,8 @@
+name = Setting Info
+description = Some Other Settings for Misc
+core = 7.x
+package = Zen Other
+
+files[] = class/settinginfo.class.inc
+
+version  = 7.x-1.1

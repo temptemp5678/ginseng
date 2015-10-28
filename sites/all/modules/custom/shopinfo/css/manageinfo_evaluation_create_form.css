@@ -1,0 +1,14 @@
+#edit-evaluation .form-group {
+  clear: both;
+}
+
+
+.form-type-radios div.form-type-radio {
+  float: left;
+  margin: 20px;
+}
+
+.form-type-radios div.form-type-radio input.form-radio{
+  width: 36px;
+  margin-left: -18px;
+}

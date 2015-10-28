@@ -1,0 +1,108 @@
+<?php
+/**
+ * @file
+ *
+ */
+
+/**
+ * Implements hook_init()
+ */
+function settinginfo_init() {
+  drupal_add_library('settinginfo', 'settinginfo_angularjs');
+  drupal_add_library('settinginfo', 'settinginfo_font_awsome');
+}
+
+/**
+ * Implements hook_library().
+ *
+   drupal_add_library('settinginfo', 'settinginfo_angularjs');
+ *
+ */
+function settinginfo_library() {
+  $libraries = array();
+
+  /**
+   * "AngularJS "
+   */
+  $libraries['settinginfo_angularjs'] = array(
+    'title' => 'AngularJS',
+    'version' => '1.4.2',
+    'website' => 'https://angularjs.org/',
+    'js' => array(
+      'https://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.min.js' => array('type' => 'external'),
+    ),
+  );
+
+  /**
+   * "Chart.js" is Simple, clean and engaging charts for designers and developers
+   * https://github.com/nnnick/Chart.js
+   */
+  $chart_js_path = drupal_get_path('module', 'settinginfo') . '/library/Chartjs/';
+  $libraries['settinginfo_chart_js'] = array(
+    'title' => 'Chart JS',
+    'version' => '1.0.2',
+    'website' => 'http://chartjs.org/',
+    'js' => array(
+      $chart_js_path . 'Chart.js' => array(),
+    ),
+  );
+
+  /**
+   * load library "Chosen"
+   * Chosen is a jQuery plugin that makes long, unwieldy select boxes much more user-friendly.
+   */
+  $chosen_path = libraries_get_path('chosen_v1.4.2') . '/';
+  $libraries['settinginfo_chosen'] = array(
+    'title' => 'Chosen jQuery select',
+    'version' => '1.4.2',
+    'website' => 'http://harvesthq.github.io/chosen/',
+    'js' => array(
+      $chosen_path . 'chosen.jquery.min.js' => array(),
+    ),
+    'css' => array(
+      $chosen_path . 'chosen.min.css' => array(),
+    ),
+  );
+
+  /**
+   * "Font Awesome"
+   * Font Awesome is a jQuery plugin that gives you the ability to make any element on your page always stay visible.
+   */
+  $font_awsome_path = libraries_get_path('font-awesome-4.4.0') . '/';
+  $libraries['settinginfo_font_awsome'] = array(
+    'title' => 'Font Awesome',
+    'version' => 'v4.4.0 ',
+    'website' => 'https://github.com/FortAwesome/Font-Awesome/',
+    'css' => array(
+      $font_awsome_path . 'css/font-awesome.min.css' => array(),
+    ),
+  );
+
+  /** - - - - - - return - - - - - - - - - - - - - - - - - - - - - - - - - -  */
+
+  return $libraries;
+}
+
+/**
+ * Implements hook_menu()
+ */
+function settinginfo_menu() {
+  $items = array();
+
+  $items['manage/basic-page/403page'] = array(
+    'title' => '403 Page',
+    'page callback' => '_settinginfo_manage_basic_page_403',
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+    'file' => 'inc/settinginfo_manage_basic_page.page.inc',
+  );
+  $items['manage/basic-page/404page'] = array(
+    'title' => '404 Page',
+    'page callback' => '_settinginfo_manage_basic_page_404',
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+    'file' => 'inc/othersetting_manage_basic_page.page.inc',
+  );
+  return $items;
+}
+

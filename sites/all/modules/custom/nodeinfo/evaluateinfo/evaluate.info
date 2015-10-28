@@ -1,0 +1,10 @@
+name = Evaluate Info
+description = Enhance feature for Node Type evaluation
+core = 7.x
+package = Zen Other
+
+dependencies[] = nodeinfo
+
+;files[] = class/node_meeting_info.class.inc
+
+version  = 7.x-1.1

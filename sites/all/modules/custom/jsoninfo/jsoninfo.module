@@ -1,0 +1,19 @@
+<?php
+/**
+ * @file
+ *
+ */
+
+/**
+ * Implements hook_init()
+ */
+function jsoninfo_init() {
+  $SourceJson = new SourceJson();
+  OtherCommonJson::saveDataToJson($SourceJson->allQuestionLibrary(), 'source/all_question_library.json');
+  OtherCommonJson::saveDataToJson($SourceJson->allQuestionSet(), 'source/all_question_set.json');
+  OtherCommonJson::saveDataToJson($SourceJson->allProgram(), 'source/all_program.json');
+  OtherCommonJson::saveDataToJson($SourceJson->allMeetingData(), 'source/all_meeting.json');
+
+}
+
+

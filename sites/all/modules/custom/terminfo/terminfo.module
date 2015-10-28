@@ -1,0 +1,83 @@
+<?php
+/**
+ * @file
+ *
+ */
+
+/*
+ * Implementation of hook_init()
+ */
+function terminfo_init() {
+  // $SourceJson = new SourceJson();
+  // $SourceJson->saveSourceJson();
+}
+
+/**
+ * Implements hook_menu()
+ */
+function terminfo_menu() {
+  $items = array();
+
+  $items['manage/program/add'] = array(
+    'title' => 'Add Program',
+    'page callback' => '_terminfo_add_program',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'inc/terminfo_add_term.page.inc',
+  );
+  $items['manage/program/edit/%'] = array(
+    'title' => 'Edit Program',
+    'page callback' => '_terminfo_edit_program',
+    'page arguments' => array(3),
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'inc/terminfo_edit_term.page.inc',
+  );
+
+  $items['manage/notify/add'] = array(
+    'title' => 'Add notify',
+    'page callback' => '_terminfo_add_notify',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'inc/terminfo_add_term.page.inc',
+  );
+  $items['manage/notify/edit/%'] = array(
+    'title' => 'Edit Program',
+    'page callback' => '_terminfo_edit_program',
+    'page arguments' => array(3),
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'inc/terminfo_edit_term.page.inc',
+  );
+
+  return $items;
+}
+
+/**
+ * hook_form_alter()
+ */
+function terminfo_form_alter(&$form, &$form_state, $form_id) {
+  if ($form_id == 'taxonomy_form_term') {
+    if ($form['#vocabulary']->vid == 3) {
+      /** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  */
+      global $user;
+      if (in_array('administrator', array_values($user->roles))) {
+        $form['markup_tokens'] = array(
+          // user either one theme way
+          // '#theme' => 'token_tree_link',
+          '#theme' => 'token_tree',
+
+          // The token types that have specific context. Can be multiple token types like 'term' and/or 'user'
+          '#token_types' => array('term'),
+          // A boolean TRUE or FALSE whether to include 'global' context tokens like [current-user:*] or [site:*]. Defaults to TRUE.
+          '#global_types' => TRUE,
+          // A boolean whether to include the 'Click this token to insert in into the the focused textfield' JavaScript functionality. Defaults to TRUE.
+          '#click_insert' => TRUE,
+          '#weight' => 10,
+        );
+      }
+    }
+  }
+}
+
+
