@@ -1,0 +1,6 @@
+name = Shop Info
+description = Enhance feature for Shop info page
+core = 7.x
+package = Zen Other
+
+version  = 7.x-1.1

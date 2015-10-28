@@ -1,0 +1,36 @@
+<?php
+/**
+ * @file
+ *
+ */
+
+/*
+ * Implements of hook_init()
+ */
+function manageinfo_init() {
+}
+
+/**
+ * Implements hook_menu()
+ */
+function manageinfo_menu() {
+  $items = array();
+
+  $items['manage/evaluation/create'] = array(
+    'title' => 'Create Evaluation',
+    'page callback' => '_manageinfo_evaluation_create',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'inc/manageinfo_node_create.page.inc',
+  );
+  $items['manage/evaluation/create-form-page'] = array(
+    'title' => 'Create Evaluation',
+    'page callback' => '_manageinfo_evaluation_create_form_page',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'inc/manageinfo_node_create_form.page.inc',
+  );
+
+  return $items;
+}
+
