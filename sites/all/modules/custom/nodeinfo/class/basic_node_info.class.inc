@@ -114,10 +114,10 @@ class NodeInfo {
 
 /**
  * class
-   $meetingInfo = new meetingInfo($nid);
-   $meetingInfo->programTid();
+   $MeetingInfo = new MeetingInfo($nid);
+   $MeetingInfo->programTid();
  */
-class meetingInfo extends NodeInfo {
+class MeetingInfo extends NodeInfo {
   /** - - - - - - field - - - - - - - - - - - - - - - - - - - - - - - - - -  */
 
   /**
@@ -181,25 +181,105 @@ class meetingInfo extends NodeInfo {
     return $output;
   }
 
+  /** - - - - - - other - - - - - - - - - - - - - - - - - - - - - - - - - -  */
+
+}
+
+/**
+ * class
+   $GinsengInfo = new GinsengInfo($nid);
+   $GinsengInfo->programTid();
+ */
+class GinsengInfo extends NodeInfo {
+  /** - - - - - - field - - - - - - - - - - - - - - - - - - - - - - - - - -  */
+
   /**
-   * @return Integer, Term Tid
+   * @return String
    */
-  public function programQuestionSetTid() {
+  public function buyer() {
     $output = NULL;
-    if ($this->programTid()) {
-      $TermProgramInfo = new TermProgramInfo($this->programTid());
-      $output = $TermProgramInfo->questionSetTid();
+    if (isset($this->node->field_ginseng_buyer['und'][0]['safe_value'])) {
+      $output = $this->node->field_ginseng_buyer['und'][0]['safe_value'];
+    }
+    return $output;
+  }
+
+  /**
+   * @return Integer
+   */
+  public function pictureArray() {
+    $output = NULL;
+    if (isset($this->node->field_ginseng_picture['und'][0]['fid'])) {
+      $output = $this->node->field_ginseng_picture['und'];
+    }
+    return $output;
+  }
+
+  /**
+   * @return Integer
+   */
+  public function pictureOneUri() {
+    $output = NULL;
+    if (isset($this->node->field_ginseng_picture['und'][0]['uri'])) {
+      $output = $this->node->field_ginseng_picture['und'][0]['uri'];
     }
     return $output;
   }
   /**
-   * @return array,
+   * @return Integer
    */
-  public function programQuestionSetArray() {
+  public function pictureTwoUri() {
     $output = NULL;
-    if ($this->programQuestionSetTid()) {
-      $TermQuestionSetInfo = new TermQuestionSetInfo($this->programQuestionSetTid());
-      $output = $TermQuestionSetInfo->questionSetArray();
+    if (isset($this->node->field_ginseng_picture['und'][1]['uri'])) {
+      $output = $this->node->field_ginseng_picture['und'][1]['uri'];
+    }
+    return $output;
+  }
+
+  /**
+   * @return Integer
+   */
+  public function price() {
+    $output = NULL;
+    if (isset($this->node->field_ginseng_picture['und'][0]['value'])) {
+      $output = $this->node->field_ginseng_picture['und'][0]['value'];
+    }
+    return $output;
+  }
+
+  /**
+   * @return integer, date unix stamp for quote order time
+   */
+  public function soldDateUnixStamp() {
+    $output = NULL;
+    if (isset($this->node->field_ginseng_sold_date['und'][0]['value'])) {
+      $output = $this->node->field_ginseng_sold_date['und'][0]['value'];
+    }
+    return $output;
+  }
+  /**
+   * @return string depeng on parameter format
+   */
+  public function soldDateValue($format = NULL, $timezone = NULL) {
+    if (!$format) {
+      $format = "Y-m-d";
+    }
+
+    $output = NULL;
+    $stamp = $this->soldDateUnixStamp();
+    if ($stamp) {
+      $output = format_date($stamp, 'custom', $format, $timezone);
+    }
+    return $output;
+  }
+
+  /**
+   * @return Integer
+   */
+  public function soldPrice() {
+    $output = NULL;
+    if (isset($this->node->field_ginseng_sold_price['und'][0]['value'])) {
+      $output = $this->node->field_ginseng_sold_price['und'][0]['value'];
     }
     return $output;
   }
@@ -207,109 +287,22 @@ class meetingInfo extends NodeInfo {
   /**
    * @return Integer, Term Tid
    */
-  public function provinceTid() {
+  public function statusTid() {
     $output = NULL;
-    if (isset($this->node->field_meeting_province['und'][0]['target_id'])) {
-      $output = $this->node->field_meeting_province['und'][0]['target_id'];
+    if (isset($this->node->field_ginseng_status['und'][0]['target_id'])) {
+      $output = $this->node->field_ginseng_status['und'][0]['target_id'];
     }
     return $output;
   }
   /**
-   * @return String, Term Property
+   * @return Integer, Term Tid
    */
-  public function provinceName() {
+  public function statusName() {
     $output = NULL;
 
-    $TermInfo = new TermInfo($this->provinceTid());
+    $TermInfo = new TermInfo($this->statusTid());
     if(!empty($TermInfo)) {
       $output = $TermInfo->termName();
-    }
-
-    return $output;
-  }
-
-  /**
-   * @return Integer, User Uid
-   */
-  public function repUid() {
-    $output = NULL;
-    if (isset($this->node->uid)) {
-      $output = $this->node->uid;
-    }
-    return $output;
-  }
-  /**
-   * @return String, User Property
-   */
-  public function repName() {
-    $output = NULL;
-
-    $UserInfo = new UserInfo($this->repUid());
-    if(!empty($UserInfo)) {
-      $output = $UserInfo->fullname();
-    }
-
-    return $output;
-  }
-  /**
-   * @return String, User Property
-   */
-  public function repEmail() {
-    $output = NULL;
-
-    $UserInfo = new UserInfo($this->repUid());
-    if(!empty($UserInfo)) {
-      $output = $UserInfo->userEmail();
-    }
-
-    return $output;
-  }
-
-  /**
-   * @return Integer, User Uid
-   */
-  public function speakerTid() {
-    $output = NULL;
-    if (isset($this->node->field_meeting_speaker['und'][0]['target_id'])) {
-      $output = $this->node->field_meeting_speaker['und'][0]['target_id'];
-    }
-    return $output;
-  }
-  /**
-   * @return String, User Property
-   */
-  public function speakerEmail() {
-    $output = NULL;
-
-    $UserInfo = new UserInfo($this->speakerTid());
-    if(!empty($UserInfo)) {
-      $output = $UserInfo->userEmail();
-    }
-
-    return $output;
-  }
-  /**
-   * @return String, User Property
-   */
-  public function speakerName() {
-    $output = NULL;
-
-    $UserInfo = new UserInfo($this->speakerTid());
-    if(!empty($UserInfo)) {
-      $output = $UserInfo->fullname();
-    }
-
-    return $output;
-  }
-  /**
-   * @return String, User Property
-   */
-  public function speakerLastName() {
-    $output = NULL;
-
-    $UserInfo = new UserInfo($this->speakerTid());
-    if(!empty($UserInfo)) {
-      $output = $UserInfo->lastname();
     }
 
     return $output;

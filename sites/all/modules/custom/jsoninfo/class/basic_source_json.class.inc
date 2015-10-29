@@ -236,16 +236,6 @@ class SourceJson {
       $output['terms'] = $province_term;
     }
 
-    $output['users']['option']['timezone'] = array(
-      'America/Edmonton' => "America/Edmonton",
-      'America/Halifax' => 'America/Halifax',
-      'America/Regina' => 'America/Regina',
-      'America/St_Johns' => 'America/St Johns',
-      'America/Toronto' => 'America/Toronto',
-      'America/Vancouver' => 'America/Vancouver',
-      'America/Winnipeg' => 'America/Winnipeg',
-    );
-
     foreach (entity_load('user') as $key => $row) {
       if ($key > 0) {
         if ($row->status == 1) {
@@ -289,9 +279,9 @@ class SourceJson {
      * data
      */
     $NodeQuery = new NodeQuery();
-    $all_meeting_nid = $NodeQuery->allMeetingNid();
+    $all_ginseng_nid = $NodeQuery->allGinsengNid();
 
-    $nodes = node_load_multiple($all_meeting_nid);
+    $nodes = node_load_multiple($all_ginseng_nid);
 
     /**
      * data row array
@@ -301,26 +291,22 @@ class SourceJson {
     $data_row['nodes'] = array();
     if (is_array($nodes)) {
       foreach($nodes as $node) {
-        $MeetingInfo = new MeetingInfo($node);
+        $GinsengInfo = new GinsengInfo($node);
 
         // table row
-        $data_row['nodes']['meeting'][] = array(
-          'author' => user_load($node->uid)->name,
-          'city' => $MeetingInfo->city(),
-          'dateValue' => $MeetingInfo->dateValue('Y-m-d'),
-          // 'dateLong' => $MeetingInfo->dateValue('l, F d, Y'),
-          // 'datetime' => $MeetingInfo->dateValue('Y-m-d H:i:s'),
-          // 'dateUnixStamp' => $MeetingInfo->dateUnixStamp(),
-          'linkCreateEvaluation' => base_path() . 'manage/evaluation/create-form-page/' . $MeetingInfo->nodeNid(),
-          'nid' => $MeetingInfo->nodeNid(),
-          'nodeUid' => $MeetingInfo->nodeUid(),
-          'programTid' => $MeetingInfo->programTid(),
-          'programName' => $MeetingInfo->programName(),
-          // 'programType' => $MeetingInfo->programType(),
-          // 'programObjective' => $MeetingInfo->programObjective(),
-          // 'programSelectText' => 'Select',
-          'speakerName' => $MeetingInfo->speakerName(),
-          // 'timeWithZone' => $MeetingInfo->dateValue('h:i A T'),
+        $data_row['nodes']['ginseng'][] = array(
+          'nid' => $GinsengInfo->nodeNid(),
+          'nodeUid' => $GinsengInfo->nodeUid(),
+          'buyer' => $GinsengInfo->buyer(),
+          'price' => $GinsengInfo->price(),
+          'soldPrice' => $GinsengInfo->soldPrice(),
+          'statusTid' => $GinsengInfo->statusTid(),
+          'statusName' => $GinsengInfo->statusName(),
+          'pictureOneUri' => $GinsengInfo->pictureOneUri(),
+          'pictureTwoUri' => $GinsengInfo->pictureTwoUri(),
+          'soldDateValue' => $GinsengInfo->soldDateValue('Y-m-d'),
+          'soldDateUnixStamp' => $GinsengInfo->soldDateUnixStamp(),
+          // 'linkCreateEvaluation' => base_path() . 'manage/evaluation/create-form-page/' . $GinsengInfo->nodeNid(),
         );
       }
     }
