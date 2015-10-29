@@ -31,11 +31,11 @@ class OtherCommonJson {
     }
 
     if ($json_data) {
-      $file = file_save_data($json_data, 'private://json/' . $file_name, FILE_EXISTS_REPLACE);
+      $file = file_save_data($json_data, 'public://json/' . $file_name, FILE_EXISTS_REPLACE);
     }
     else {
       // put empty content
-      $file = file_save_data('', 'private://json/' . $file_name, FILE_EXISTS_REPLACE);
+      $file = file_save_data('', 'public://json/' . $file_name, FILE_EXISTS_REPLACE);
     }
   }
 
@@ -52,16 +52,16 @@ class OtherCommonJson {
     if (is_array($raw_data)) {
       $json_data = OtherCommonJson::encodeJson($raw_data);
       if ($json_data) {
-        $file = file_save_data($json_data, 'private://json/' . $file_name, FILE_EXISTS_REPLACE);
+        $file = file_save_data($json_data, 'public://json/' . $file_name, FILE_EXISTS_REPLACE);
       }
       else {
         // put empty content
-        $file = file_save_data('', 'private://json/' . $file_name, FILE_EXISTS_REPLACE);
+        $file = file_save_data('', 'public://json/' . $file_name, FILE_EXISTS_REPLACE);
       }
     }
     else {
       // put empty content
-      $file = file_save_data('', 'private://json/' . $file_name, FILE_EXISTS_REPLACE);
+      $file = file_save_data('', 'public://json/' . $file_name, FILE_EXISTS_REPLACE);
     }
   }
 }
@@ -289,10 +289,12 @@ class SourceJson {
     $data_row = array();
 
     $data_row['nodes'] = array();
+    $data_row['nodes']['ginseng'] = array();
     if (is_array($nodes)) {
       foreach($nodes as $node) {
         $GinsengInfo = new GinsengInfo($node);
 
+        $key = 'item-' . $node->nid;
         // table row
         $data_row['nodes']['ginseng'][] = array(
           'nid' => $GinsengInfo->nodeNid(),

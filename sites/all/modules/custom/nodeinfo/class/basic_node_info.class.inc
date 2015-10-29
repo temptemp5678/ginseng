@@ -218,7 +218,7 @@ class GinsengInfo extends NodeInfo {
   /**
    * @return Integer
    */
-  public function pictureOneUri() {
+  public function pictureBasePath() {
     $output = NULL;
     if (isset($this->node->field_ginseng_picture['und'][0]['uri'])) {
       $output = $this->node->field_ginseng_picture['und'][0]['uri'];
@@ -228,10 +228,22 @@ class GinsengInfo extends NodeInfo {
   /**
    * @return Integer
    */
+  public function pictureOneUri() {
+    $output = NULL;
+    if (isset($this->node->field_ginseng_picture['und'][0]['uri'])) {
+      $path = $this->node->field_ginseng_picture['und'][0]['uri'];
+      $output = file_create_url($path);
+    }
+    return $output;
+  }
+  /**
+   * @return Integer
+   */
   public function pictureTwoUri() {
     $output = NULL;
     if (isset($this->node->field_ginseng_picture['und'][1]['uri'])) {
-      $output = $this->node->field_ginseng_picture['und'][1]['uri'];
+      $path = $this->node->field_ginseng_picture['und'][1]['uri'];
+      $output = file_create_url($path);
     }
     return $output;
   }
