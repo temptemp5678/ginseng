@@ -8,9 +8,28 @@
  * Implements hook_init()
  */
 function jsoninfo_init() {
-  $SourceJson = new SourceJson();
-  OtherCommonJson::saveDataToJson($SourceJson->allGinsengData(), 'source/all_ginseng.json');
-
+  // $SourceJson = new SourceJson();
+  // OtherCommonJson::saveDataToJson($SourceJson->allGinsengData(), 'source/all_ginseng.json');
 }
 
+/**
+ * Implements hook_menu()
+ */
+function jsoninfo_menu() {
+  $items = array();
 
+  /** - - - - node - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  */
+  $items['api/json/node/all-ginseng-data'] = array(
+    'title' => 'Node JSON',
+    'page callback' => '_jsoninfo_node_all_ginseng_data',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'inc/jsoninfo_api_node_output.page.inc',
+  );
+
+  /** - - - - term - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  */
+
+  /** - - - - user - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  */
+
+  return $items;
+}

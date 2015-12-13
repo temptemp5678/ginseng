@@ -33,19 +33,23 @@ function _shopinfo_shop_list() {
       /**
        * List table
        */
-      $output .= '<div class="row margin-0 margin-top-12 clear-both">';
+      $output .= '<div class="row margin-0 margin-top-24 clear-both">';
         $output .= '<div data-ng-repeat="row in sourcedata | filter:inputFilter" class="">';
-          $output .= '<div class="col-xs-6 col-xs-4 col-md-3">';
-            $output .= '<img ng-src="{{ row.pictureOneUri }}" class="attachment-shop_catalog wp-post-image" alt="">';
-            $output .= '<div class="product-info">';
-              $output .= '<span class="category-product">';
-                $output .= 'shirts';
-              $output .= '</span>';
-              $output .= '<span class="price">';
-              // $output .= '<span class="amount">{{ row.price }}<sup>33</sup></span>';
-              $output .= '</span>';
+
+          $output .= '<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-36">';
+            $output .= '<div class="product-info-wrapper box-shadow-6-2 height-380 bg-ffffff">';
+              $output .= '<img data-ng-src="{{ row.pictureOneUri }}" class="border-bottom-1-f0f2f5" alt="" style="width:100%;height:280px;">';
+              $output .= '<div class="product-info text-center bg-ffffff">';
+                $output .= '<div class="color-7b7f81 margin-top-24 ">';
+                  $output .= 'shirts';
+                $output .= '</div>';
+                $output .= '<div class="price">';
+                  $output .= '<span class="amount">{{ row.price }}<sup>33</sup></span>';
+                $output .= '</div>';
+              $output .= '</div>';
             $output .= '</div>';
           $output .= '</div>';
+
         $output .= '</div>';
       $output .= '</div>';
 

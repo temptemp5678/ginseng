@@ -40,6 +40,63 @@ class NodeInfo {
     return $output;
   }
 
+  /** - - - - - Basic Object - - - - - - - - - -  - - - - -   */
+  /**
+   * all Methods
+   */
+  protected function allMethods() {
+    $methods = NULL;
+
+    /**
+     * similar with  $methods = get_class_methods($this);
+     */
+    $reflect = new ReflectionClass(get_class($this));
+    $methods = $reflect->getMethods(ReflectionProperty::IS_PUBLIC);
+
+    return $methods;
+  }
+
+  /**
+   * all Methods with filter condition
+   */
+  protected function allMethodsArray() {
+    $output = NULL;
+
+    $methods = $this->allMethods();
+    if (is_array($methods)) {
+      foreach ($methods as $method) {
+        if ($method->name != '__construct') {
+          if ($method->name != 'allMethodsValue') {
+            $output[] = $method->name;
+          }
+        }
+      }
+    }
+    return $output;
+  }
+
+  /**
+   * all Methods value
+   * @return, array
+     array{
+       method1 => value1,
+       method2 => value2,
+     };
+   */
+  public function allMethodsValue() {
+    $output = array();
+
+    $methods = $this->allMethodsArray();
+    if (is_array($methods)) {
+      $row = '';
+      foreach ($methods as $key => $method) {
+        $row[$method] = $this->$method();
+      }
+      $output = $row;
+    }
+    return $output;
+  }
+
   /** - - - - - - basic - - - - - - - - - - - - - - - - - - - - - - - - - -  */
   /**
    * @return String, Node Title
@@ -105,79 +162,6 @@ class NodeInfo {
     if ($stamp) {
       $output = format_date($stamp, 'custom', $format);
     }
-    return $output;
-  }
-
-  /** - - - - - - other - - - - - - - - - - - - - - - - - - - - - - - - - -  */
-
-}
-
-/**
- * class
-   $MeetingInfo = new MeetingInfo($nid);
-   $MeetingInfo->programTid();
- */
-class MeetingInfo extends NodeInfo {
-  /** - - - - - - field - - - - - - - - - - - - - - - - - - - - - - - - - -  */
-
-  /**
-   * @return Integer, Term Tid
-   */
-  public function city() {
-    $output = NULL;
-    if (isset($this->node->field_meeting_city['und'][0]['safe_value'])) {
-      $output = $this->node->field_meeting_city['und'][0]['safe_value'];
-    }
-    return $output;
-  }
-
-  /**
-   * @return integer, date unix stamp for quote order time
-   */
-  public function dateUnixStamp() {
-    $output = NULL;
-    if (isset($this->node->field_meeting_date['und'][0]['value'])) {
-      $output = $this->node->field_meeting_date['und'][0]['value'];
-    }
-    return $output;
-  }
-  /**
-   * @return string depeng on parameter format
-   */
-  public function dateValue($format = NULL, $timezone = NULL) {
-    if (!$format) {
-      $format = "Y-m-d";
-    }
-
-    $output = NULL;
-    $stamp = $this->dateUnixStamp();
-    if ($stamp) {
-      $output = format_date($stamp, 'custom', $format, $timezone);
-    }
-    return $output;
-  }
-
-  /**
-   * @return Integer, Term Tid
-   */
-  public function programTid() {
-    $output = NULL;
-    if (isset($this->node->field_meeting_program['und'][0]['target_id'])) {
-      $output = $this->node->field_meeting_program['und'][0]['target_id'];
-    }
-    return $output;
-  }
-  /**
-   * @return Integer, Term Tid
-   */
-  public function programName() {
-    $output = NULL;
-
-    $TermInfo = new TermInfo($this->programTid());
-    if(!empty($TermInfo)) {
-      $output = $TermInfo->termName();
-    }
-
     return $output;
   }
 
