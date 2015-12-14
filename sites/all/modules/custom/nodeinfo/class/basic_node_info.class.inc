@@ -237,8 +237,19 @@ class GinsengInfo extends NodeInfo {
    */
   public function price() {
     $output = NULL;
-    if (isset($this->node->field_ginseng_picture['und'][0]['value'])) {
-      $output = $this->node->field_ginseng_picture['und'][0]['value'];
+    if (isset($this->node->field_ginseng_price['und'][0]['value'])) {
+      $output = $this->node->field_ginseng_price['und'][0]['value'];
+    }
+    return $output;
+  }
+
+  /**
+   * @return Integer
+   */
+  public function serial() {
+    $output = NULL;
+    if (isset($this->node->field_ginseng_serial['und'][0]['value'])) {
+      $output = $this->node->field_ginseng_serial['und'][0]['value'];
     }
     return $output;
   }

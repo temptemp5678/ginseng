@@ -48,7 +48,6 @@ function nodeinfo_node_presave($node) {
  */
 function _nodeinfo_nodetitle_set_title(&$node) {
   if ($node->type == 'ginseng') {
-    $meetingInfo = new meetingInfo($node->nid);
     $node->title = t('Ginseng Product');
   }
 

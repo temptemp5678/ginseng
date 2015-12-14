@@ -43,8 +43,11 @@ function _shopinfo_shop_list() {
                 $output .= '<div class="color-7b7f81 margin-top-24 ">';
                   $output .= 'shirts';
                 $output .= '</div>';
-                $output .= '<div class="price">';
-                  $output .= '<span class="amount">{{ row.price }}<sup>33</sup></span>';
+                $output .= '<div class="">';
+                  $output .= '<span class="amount">¥{{ row.price }}<sup></sup></span>';
+                $output .= '</div>';
+                $output .= '<div class="">';
+                  $output .= '<span class="amount"><sup>No.{{ row.serial }}</sup></span>';
                 $output .= '</div>';
               $output .= '</div>';
             $output .= '</div>';

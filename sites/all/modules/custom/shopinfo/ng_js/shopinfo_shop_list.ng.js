@@ -29,6 +29,7 @@ app.controller('shopListController', ['$scope', '$http', 'mainData', function($s
   mainData.fetchUserDetails().success(function(data) {
     // 通过mainData传递的值，来设置$scope.userProfile的初始值
     $scope.sourcedata = data.nodes.ginseng;
+    console.log($scope.sourcedata);
   })
   .error(function (data, status, headers, config) {
      //  Do some error handling here

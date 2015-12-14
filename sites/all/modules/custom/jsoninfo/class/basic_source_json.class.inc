@@ -120,22 +120,8 @@ class SourceJson {
       foreach($nodes as $node) {
         $GinsengInfo = new GinsengInfo($node);
 
-        $key = 'item-' . $node->nid;
         // table row
-        $data_row['nodes']['ginseng'][] = array(
-          'nid' => $GinsengInfo->nodeNid(),
-          'nodeUid' => $GinsengInfo->nodeUid(),
-          'buyer' => $GinsengInfo->buyer(),
-          'price' => $GinsengInfo->price(),
-          'soldPrice' => $GinsengInfo->soldPrice(),
-          'statusTid' => $GinsengInfo->statusTid(),
-          'statusName' => $GinsengInfo->statusName(),
-          'pictureOneUri' => $GinsengInfo->pictureOneUri(),
-          'pictureTwoUri' => $GinsengInfo->pictureTwoUri(),
-          'soldDateValue' => $GinsengInfo->soldDateValue('Y-m-d'),
-          'soldDateUnixStamp' => $GinsengInfo->soldDateUnixStamp(),
-          // 'linkCreateEvaluation' => base_path() . 'manage/evaluation/create-form-page/' . $GinsengInfo->nodeNid(),
-        );
+        $data_row['nodes']['ginseng'][] = $GinsengInfo->allMethodsValue();
       }
     }
 
