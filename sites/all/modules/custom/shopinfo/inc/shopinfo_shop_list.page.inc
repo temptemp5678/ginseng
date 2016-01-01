@@ -10,8 +10,8 @@ function _shopinfo_shop_list() {
   /**
    * load js
    */
+  drupal_add_css(drupal_get_path('module', 'shopinfo') .'/css/shopinfo_shop_list.css');
   drupal_add_js(drupal_get_path('module', 'shopinfo') .'/ng_js/shopinfo_shop_list.ng.js');
-
   /**
    * output
    */
@@ -38,7 +38,11 @@ function _shopinfo_shop_list() {
 
           $output .= '<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 margin-top-36">';
             $output .= '<div class="product-info-wrapper box-shadow-6-2 height-380 bg-ffffff">';
-              $output .= '<img data-ng-src="{{ row.pictureOneUri }}" class="border-bottom-1-f0f2f5" alt="" style="width:100%;height:280px;">';
+              $output .= '<div class="grid">';
+                $output .= '<figure class="effect-julia">';
+                  $output .= '<img data-ng-src="{{ row.pictureOneUri }}" class="border-bottom-1-f0f2f5" alt="" style="width:100%;height:280px;">';
+                $output .= ' </figure>';
+              $output .= ' </div>';
               $output .= '<div class="product-info text-center bg-ffffff">';
                 $output .= '<div class="color-7b7f81 margin-top-24 ">';
                   $output .= 'shirts';

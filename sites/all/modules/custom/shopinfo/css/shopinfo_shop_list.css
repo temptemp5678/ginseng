@@ -1,0 +1,63 @@
+/**
+ * [Article on Codrops](http://tympanus.net/codrops/?p=19292)
+ * [Demo](http://tympanus.net/Development/HoverEffectIdeas/)
+ */
+
+.grid {
+  position: relative;
+  clear: both;
+  margin: 0 auto;
+  padding: 1em 0 4em;
+  max-width: 1000px;
+  list-style: none;
+  text-align: center;
+}
+
+/* Common style */
+.grid figure {
+  position: relative;
+  float: left;
+  overflow: hidden;
+  margin: 10px 1%;
+/*  min-width: 320px;
+  max-width: 480px;
+  max-height: 360px;*/
+  /*width: 48%;*/
+  height: auto;
+  background: #3085a3;
+  text-align: center;
+  cursor: pointer;
+}
+
+.grid figure img {
+  position: relative;
+  display: block;
+/*  min-height: 100%;
+  max-width: 100%;*/
+  opacity: 0.8;
+}
+
+/* Individual effects */
+
+/*---------------*/
+/***** Julia *****/
+/*---------------*/
+
+figure.effect-julia {
+  background: #2f3238;
+}
+
+figure.effect-julia img {
+  max-width: none;
+  height: 400px;
+  -webkit-transition: opacity 1s, -webkit-transform 1s;
+  transition: opacity 1s, transform 1s;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+figure.effect-julia:hover img {
+  opacity: 1;
+  -webkit-transform: scale3d(1.1,1.1,1);
+  transform: scale3d(1.1,1.1,1);
+}
